@@ -1,5 +1,5 @@
 services:
-  zstart_postgres:
+  dis_viewer_postgres:
     image: postgres:16.2-alpine
     shm_size: 1g
     user: postgres
@@ -23,9 +23,9 @@ services:
       -c hot_standby=on 
       -c hot_standby_feedback=on
     volumes:
-      - zstart_pgdata:/var/lib/postgresql/data
+      - dis_viewer_pgdata:/var/lib/postgresql/data
       - ./:/docker-entrypoint-initdb.d
 
 volumes:
-  zstart_pgdata:
+  dis_viewer_pgdata:
     driver: local

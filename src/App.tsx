@@ -1,197 +1,111 @@
-import { useQuery, useZero } from "@rocicorp/zero/react";
-import Cookies from "js-cookie";
-import { useState } from "react";
-import { formatDate } from "./date.ts";
-import { randInt } from "./rand.ts";
-import { RepeatButton } from "./repeat-button.tsx";
-import { mutators } from "./mutators.ts";
+import { useQuery } from "@rocicorp/zero/react";
+import { useEffect, useState } from "react";
 import { queries } from "./queries.ts";
-import { randomMessage } from "./test-data.ts";
 
 function App() {
-  const z = useZero();
-  const [users] = useQuery(queries.users.all());
-  const [mediums] = useQuery(queries.mediums.all());
+  const [search, setSearch] = useState("");
+  const [selectedCode, setSelectedCode] = useState("");
 
-  const [filterUser, setFilterUser] = useState("");
-  const [filterText, setFilterText] = useState("");
-
-  const [allMessages] = useQuery(queries.messages.feed({}));
-  const [filteredMessages] = useQuery(
-    queries.messages.feed({
-      senderID: filterUser || undefined,
-      search: filterText || undefined,
-    })
+  const [allZorgproducten] = useQuery(
+    queries.zorgproducten.dbcZorgproducten()
+  );
+  const [searchedZorgproducten] = useQuery(
+    search ? queries.zorgproducten.search({ search }) : null
+  );
+  const zorgproducten =
+    (search ? searchedZorgproducten : allZorgproducten) ?? [];
+  const [selectedProduct] = useQuery(
+    selectedCode ? queries.zorgproducten.byCode(selectedCode) : null
   );
 
-  const hasFilters = filterUser || filterText;
+  useEffect(() => {
+    if (zorgproducten.length === 0) {
+      if (selectedCode) {
+        setSelectedCode("");
+      }
+      return;
+    }
 
-  // If initial sync hasn't completed, these can be empty.
-  if (!users.length || !mediums.length) {
-    return null;
-  }
-
-  const viewer = users.find((user) => user.id === z.userID);
+    const stillExists = zorgproducten.some(
+      (product) => product.zorgproductCd === selectedCode
+    );
+    if (!stillExists) {
+      setSelectedCode(zorgproducten[0].zorgproductCd);
+    }
+  }, [selectedCode, zorgproducten]);
 
   return (
     <>
       <div className="controls">
         <div>
-          <RepeatButton
-            onTrigger={() => {
-              z.mutate(mutators.message.insert(randomMessage(users, mediums)));
-            }}
-          >
-            Add Messages
-          </RepeatButton>
-          <RepeatButton
-            onTrigger={(e) => {
-              if (!viewer && !e.shiftKey) {
-                alert(
-                  "You must be logged in to delete. Hold shift to try anyway."
-                );
-                return false;
-              }
-              if (allMessages.length === 0) {
-                return false;
-              }
-
-              const index = randInt(allMessages.length);
-              z.mutate(mutators.message.delete({ id: allMessages[index].id }));
-              return true;
-            }}
-          >
-            Remove Messages
-          </RepeatButton>
-          <em>(hold down buttons to repeat)</em>
-        </div>
-        <div
-          style={{
-            justifyContent: "end",
-          }}
-        >
-          {viewer && `Logged in as ${viewer.name}`}
-          {viewer ? (
-            <button
-              onMouseDown={() => {
-                Cookies.remove("jwt");
-                location.reload();
-              }}
-            >
-              Logout
-            </button>
-          ) : (
-            <button
-              onMouseDown={() => {
-                fetch("/api/login")
-                  .then(() => {
-                    location.reload();
-                  })
-                  .catch((error) => {
-                    alert(`Failed to login: ${error.message}`);
-                  });
-              }}
-            >
-              Login
-            </button>
-          )}
-        </div>
-      </div>
-      <div className="controls">
-        <div>
-          From:
-          <select
-            onChange={(e) => setFilterUser(e.target.value)}
-            style={{ flex: 1 }}
-          >
-            <option key={""} value="">
-              Sender
-            </option>
-            {users.map((user) => (
-              <option key={user.id} value={user.id}>
-                {user.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          Contains:
+          Search:
           <input
             type="text"
-            placeholder="message"
-            onChange={(e) => setFilterText(e.target.value)}
+            placeholder="code or description"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             style={{ flex: 1 }}
           />
         </div>
+        <div>
+          <em>
+            {search
+              ? `Found ${zorgproducten.length} zorgproducten`
+              : `Showing ${zorgproducten.length} zorgproducten`}
+          </em>
+        </div>
       </div>
-      <div className="controls">
-        <em>
-          {!hasFilters ? (
-            <>Showing all {filteredMessages.length} messages</>
-          ) : (
-            <>
-              Showing {filteredMessages.length} of {allMessages.length}{" "}
-              messages. Try opening{" "}
-              <a href="/" target="_blank">
-                another tab
-              </a>{" "}
-              to see them all!
-            </>
-          )}
-        </em>
-      </div>
-      {filteredMessages.length === 0 ? (
+      {zorgproducten.length === 0 ? (
         <h3>
-          <em>No posts found 😢</em>
+          <em>No zorgproducten found</em>
         </h3>
       ) : (
         <table border={1} cellSpacing={0} cellPadding={6} width="100%">
           <thead>
             <tr>
-              <th>Sender</th>
-              <th>Medium</th>
-              <th>Message</th>
-              <th>Labels</th>
-              <th>Sent</th>
-              <th>Edit</th>
+              <th>Code</th>
+              <th>Description</th>
             </tr>
           </thead>
           <tbody>
-            {filteredMessages.map((message) => (
-              <tr key={message.id}>
-                <td align="left">{message.sender?.name}</td>
-                <td align="left">{message.medium?.name}</td>
-                <td align="left">{message.body}</td>
-                <td align="left">{message.labels.join(", ")}</td>
-                <td align="right">{formatDate(message.timestamp)}</td>
-                <td
-                  onMouseDown={(e) => {
-                    if (message.senderID !== z.userID && !e.shiftKey) {
-                      alert(
-                        "You aren't logged in as the sender of this message. Editing won't be permitted. Hold the shift key to try anyway."
-                      );
-                      return;
-                    }
-
-                    const body = prompt("Edit message", message.body);
-                    if (body === null) {
-                      return;
-                    }
-                    z.mutate(
-                      mutators.message.update({
-                        id: message.id,
-                        body,
-                      })
-                    );
-                  }}
-                >
-                  ✏️
-                </td>
+            {zorgproducten.map((product) => (
+              <tr
+                key={product.zorgproductCd}
+                onClick={() => setSelectedCode(product.zorgproductCd)}
+                style={{
+                  cursor: "pointer",
+                  backgroundColor:
+                    product.zorgproductCd === selectedCode
+                      ? "#f2f2f2"
+                      : "transparent",
+                }}
+              >
+                <td align="left">{product.zorgproductCd}</td>
+                <td align="left">{product.consumentOms}</td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
+      {selectedProduct ? (
+        <div className="controls">
+          <div>
+            <strong>Selected zorgproduct</strong>
+          </div>
+          <div>Code: {selectedProduct.zorgproductCd}</div>
+          <div>Consument omschrijving: {selectedProduct.consumentOms}</div>
+          <div>Latijn omschrijving: {selectedProduct.latijnOms}</div>
+          <div>
+            Declaratie verzekerd: {selectedProduct.declaratieVerzekerdCd}
+          </div>
+          <div>
+            Declaratie onverzekerd: {selectedProduct.declaratieOnverzekerdCd}
+          </div>
+          <div>Versie: {selectedProduct.versie}</div>
+          <div>Datum bestand: {selectedProduct.datumBestand}</div>
+          <div>Peildatum: {selectedProduct.peildatum}</div>
+        </div>
+      ) : null}
     </>
   );
 }

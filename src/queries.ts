@@ -3,32 +3,28 @@ import { z } from "zod";
 import { zql } from "./schema.ts";
 
 export const queries = defineQueries({
-  users: {
-    all: defineQuery(() => zql.user.orderBy("name", "asc")),
-  },
-  mediums: {
-    all: defineQuery(() => zql.medium.orderBy("name", "asc")),
-  },
-  messages: {
-    feed: defineQuery(
+  zorgproducten: {
+    dbcZorgproducten: defineQuery(() =>
+      zql.refZorgproduct.orderBy("zorgproductCd", "asc")
+    ),
+    search: defineQuery(
       z.object({
-        senderID: z.string().optional(),
-        search: z.string().optional(),
+        search: z.string(),
       }),
-      ({ args: { senderID, search } }) => {
-        let query = zql.message
-          .related("medium")
-          .related("sender")
-          .orderBy("timestamp", "desc");
-
-        if (senderID) {
-          query = query.where("senderID", senderID);
-        }
-        if (search) {
-          query = query.where("body", "LIKE", `%${escapeLike(search)}%`);
-        }
-        return query;
+      ({ args: { search } }) => {
+        const pattern = `%${escapeLike(search)}%`;
+        return zql.refZorgproduct
+          .where(({ cmp, or }) =>
+            or(
+              cmp("zorgproductCd", "ILIKE", pattern),
+              cmp("consumentOms", "ILIKE", pattern)
+            )
+          )
+          .orderBy("zorgproductCd", "asc");
       }
+    ),
+    byCode: defineQuery(z.string(), ({ args: zorgproductCd }) =>
+      zql.refZorgproduct.where("zorgproductCd", zorgproductCd).one()
     ),
   },
 });

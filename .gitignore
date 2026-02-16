@@ -35,4 +35,5 @@ zero.db*
 # sst
 .sst
 
+data-raw
 data

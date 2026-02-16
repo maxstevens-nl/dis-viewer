@@ -1,0 +1,485 @@
+{
+  "id": "1b71ca40-c608-4139-a330-0750b43ade79",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.fact_dbc": {
+      "name": "fact_dbc",
+      "schema": "",
+      "columns": {
+        "jaar": {
+          "name": "jaar",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "behandelend_specialisme_cd": {
+          "name": "behandelend_specialisme_cd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "typerende_diagnose_cd": {
+          "name": "typerende_diagnose_cd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "zorgproduct_cd": {
+          "name": "zorgproduct_cd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "aantal_pat_per_zpd": {
+          "name": "aantal_pat_per_zpd",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "aantal_subtraject_per_zpd": {
+          "name": "aantal_subtraject_per_zpd",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "aantal_pat_per_diag": {
+          "name": "aantal_pat_per_diag",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "aantal_subtraject_per_diag": {
+          "name": "aantal_subtraject_per_diag",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "aantal_pat_per_spc": {
+          "name": "aantal_pat_per_spc",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "aantal_subtraject_per_spc": {
+          "name": "aantal_subtraject_per_spc",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "gemiddelde_verkoopprijs": {
+          "name": "gemiddelde_verkoopprijs",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "versie": {
+          "name": "versie",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "datum_bestand": {
+          "name": "datum_bestand",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "peildatum": {
+          "name": "peildatum",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "fact_dbc_jaar_behandelend_specialisme_cd_typerende_diagnose_cd_zorgproduct_cd_peildatum_pk": {
+          "name": "fact_dbc_jaar_behandelend_specialisme_cd_typerende_diagnose_cd_zorgproduct_cd_peildatum_pk",
+          "columns": [
+            "jaar",
+            "behandelend_specialisme_cd",
+            "typerende_diagnose_cd",
+            "zorgproduct_cd",
+            "peildatum"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.fact_dbc_profiel": {
+      "name": "fact_dbc_profiel",
+      "schema": "",
+      "columns": {
+        "jaar": {
+          "name": "jaar",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "behandelend_specialisme_cd": {
+          "name": "behandelend_specialisme_cd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "typerende_diagnose_cd": {
+          "name": "typerende_diagnose_cd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "zorgproduct_cd": {
+          "name": "zorgproduct_cd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "zorgactiviteit_cd": {
+          "name": "zorgactiviteit_cd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "zorgprofielklasse_cd": {
+          "name": "zorgprofielklasse_cd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "aantal_pat": {
+          "name": "aantal_pat",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "aantal_subtraject": {
+          "name": "aantal_subtraject",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "aantal_zat": {
+          "name": "aantal_zat",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "som_aantal_zat": {
+          "name": "som_aantal_zat",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "versie": {
+          "name": "versie",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "datum_bestand": {
+          "name": "datum_bestand",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "peildatum": {
+          "name": "peildatum",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "fact_dbc_profiel_jaar_behandelend_specialisme_cd_typerende_diagnose_cd_zorgproduct_cd_zorgactiviteit_cd_zorgprofielklasse_cd_peildatum_pk": {
+          "name": "fact_dbc_profiel_jaar_behandelend_specialisme_cd_typerende_diagnose_cd_zorgproduct_cd_zorgactiviteit_cd_zorgprofielklasse_cd_peildatum_pk",
+          "columns": [
+            "jaar",
+            "behandelend_specialisme_cd",
+            "typerende_diagnose_cd",
+            "zorgproduct_cd",
+            "zorgactiviteit_cd",
+            "zorgprofielklasse_cd",
+            "peildatum"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.ref_diagnose": {
+      "name": "ref_diagnose",
+      "schema": "",
+      "columns": {
+        "diagnose_cd": {
+          "name": "diagnose_cd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "specialisme_cd": {
+          "name": "specialisme_cd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "diagnose_omschrijving": {
+          "name": "diagnose_omschrijving",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "versie": {
+          "name": "versie",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "datum_bestand": {
+          "name": "datum_bestand",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "peildatum": {
+          "name": "peildatum",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "ref_diagnose_diagnose_cd_specialisme_cd_peildatum_pk": {
+          "name": "ref_diagnose_diagnose_cd_specialisme_cd_peildatum_pk",
+          "columns": [
+            "diagnose_cd",
+            "specialisme_cd",
+            "peildatum"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.ref_specialisme": {
+      "name": "ref_specialisme",
+      "schema": "",
+      "columns": {
+        "specialisme_cd": {
+          "name": "specialisme_cd",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "omschrijving": {
+          "name": "omschrijving",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "versie": {
+          "name": "versie",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "datum_bestand": {
+          "name": "datum_bestand",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "peildatum": {
+          "name": "peildatum",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.ref_zorgactiviteit": {
+      "name": "ref_zorgactiviteit",
+      "schema": "",
+      "columns": {
+        "zorgactiviteit_cd": {
+          "name": "zorgactiviteit_cd",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "omschrijving": {
+          "name": "omschrijving",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "zorgprofielklasse_cd": {
+          "name": "zorgprofielklasse_cd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "versie": {
+          "name": "versie",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "datum_bestand": {
+          "name": "datum_bestand",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "peildatum": {
+          "name": "peildatum",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.ref_zorgproduct": {
+      "name": "ref_zorgproduct",
+      "schema": "",
+      "columns": {
+        "zorgproduct_cd": {
+          "name": "zorgproduct_cd",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "latijn_oms": {
+          "name": "latijn_oms",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "consument_oms": {
+          "name": "consument_oms",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "declaratie_verzekerd_cd": {
+          "name": "declaratie_verzekerd_cd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "declaratie_onverzekerd_cd": {
+          "name": "declaratie_onverzekerd_cd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "versie": {
+          "name": "versie",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "datum_bestand": {
+          "name": "datum_bestand",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "peildatum": {
+          "name": "peildatum",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.ref_zorgprofielklasse": {
+      "name": "ref_zorgprofielklasse",
+      "schema": "",
+      "columns": {
+        "zorgprofielklasse_cd": {
+          "name": "zorgprofielklasse_cd",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "zorgprofielklasse_oms": {
+          "name": "zorgprofielklasse_oms",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "versie": {
+          "name": "versie",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "datum_bestand": {
+          "name": "datum_bestand",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "peildatum": {
+          "name": "peildatum",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

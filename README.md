@@ -50,7 +50,7 @@ ZERO_UPSTREAM_DB="postgresql://user:password@127.0.0.1/mydb"
 ZERO_AUTH_SECRET="secretkey"
 
 # Place to store sqlite replica file.
-ZERO_REPLICA_FILE="/tmp/zstart_replica.db"
+ZERO_REPLICA_FILE="/tmp/dis_viewer_replica.db"
 
 # Where UI will connect to zero-cache.
 VITE_PUBLIC_SERVER=http://localhost:4848
