@@ -9,7 +9,7 @@
     "dev:db-up": "docker compose --env-file .env -f ./docker/docker-compose.yml up",
     "dev:db-down": "docker compose --env-file .env -f ./docker/docker-compose.yml down",
     "dev:clean": "source .env && docker volume rm -f docker_dis_viewer_pgdata && rm -rf \"${ZERO_REPLICA_FILE}\"*",
-    "seed": "bun run api/seed.ts",
+    "seed": "bun run scripts/seed.ts",
     "schema:generate": "drizzle-zero generate --schema ./api/drizzleSchema.ts --output ./src/schema.ts",
     "build": "tsc -b && vite build",
     "lint": "eslint ."
@@ -18,9 +18,8 @@
     "@rocicorp/zero": "^0.25.2",
     "@types/papaparse": "^5.5.2",
     "drizzle-orm": "^0.45.1",
-    "jose": "^5.9.6",
-    "js-cookie": "^3.0.5",
     "papaparse": "^5.4.1",
+    "pg-copy-streams": "^7.0.0",
     "pg": "^8.16.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -30,7 +29,7 @@
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@hono/node-server": "^1.13.2",
-    "@types/js-cookie": "^3.0.6",
+    "@types/pg-copy-streams": "^1.2.2",
     "@types/bun": "^1.1.20",
     "@types/node": "^22.7.9",
     "@types/react": "^18.3.3",

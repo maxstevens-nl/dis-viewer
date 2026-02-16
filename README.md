@@ -46,9 +46,6 @@ database.
 # Your application's data
 ZERO_UPSTREAM_DB="postgresql://user:password@127.0.0.1/mydb"
 
-# Secret to decode auth token.
-ZERO_AUTH_SECRET="secretkey"
-
 # Place to store sqlite replica file.
 ZERO_REPLICA_FILE="/tmp/dis_viewer_replica.db"
 
@@ -93,10 +90,8 @@ import { ZeroProvider } from "@rocicorp/zero/react";
 import { schema } from "./schema";
 
 // In a real app, you might initialize this inside of useMemo
-// and use a real auth token
 const z = new Zero({
-  userID: "your-user-id",
-  auth: "your-auth-token",
+  userID: "public",
   server: import.meta.env.VITE_PUBLIC_SERVER,
   schema,
 });
@@ -139,12 +134,6 @@ export function UsersPage() {
 
 For more examples of queries, mutations, and relationships, explore the
 [App.tsx](src/App.tsx) file in this repository.
-
-### Optional: Authentication
-
-Authentication is now handled by the Django backend. Configure the frontend
-to point at your backend by setting `VITE_API_BASE_URL` (e.g.
-`http://localhost:8000`).
 
 ### Development
 

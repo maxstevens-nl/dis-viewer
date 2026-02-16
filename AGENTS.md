@@ -97,8 +97,7 @@ Use this file as operating guidance for agentic coding work.
 - `ZERO_UPSTREAM_DB`: Postgres connection string for Zero and Drizzle.
 - `ZERO_REPLICA_FILE`: path for Zero sqlite replica.
 - `VITE_PUBLIC_SERVER` / `VITE_PUBLIC_ZERO_CACHE_URL`: client Zero cache URL.
-- `AUTH_SECRET` is used in `api/index.ts` for JWT handling.
-- The README mentions `ZERO_AUTH_SECRET`; align env names if you modify auth.
+- `AUTH_SECRET` is not required; the app runs without auth.
 
 ## Where to look
 - API: `api/index.ts`, `api/db.ts`, `api/drizzleSchema.ts`

@@ -76,7 +76,7 @@ function App() {
                   cursor: "pointer",
                   backgroundColor:
                     product.zorgproductCd === selectedCode
-                      ? "#f2f2f2"
+                      ? "#444"
                       : "transparent",
                 }}
               >
@@ -87,25 +87,6 @@ function App() {
           </tbody>
         </table>
       )}
-      {selectedProduct ? (
-        <div className="controls">
-          <div>
-            <strong>Selected zorgproduct</strong>
-          </div>
-          <div>Code: {selectedProduct.zorgproductCd}</div>
-          <div>Consument omschrijving: {selectedProduct.consumentOms}</div>
-          <div>Latijn omschrijving: {selectedProduct.latijnOms}</div>
-          <div>
-            Declaratie verzekerd: {selectedProduct.declaratieVerzekerdCd}
-          </div>
-          <div>
-            Declaratie onverzekerd: {selectedProduct.declaratieOnverzekerdCd}
-          </div>
-          <div>Versie: {selectedProduct.versie}</div>
-          <div>Datum bestand: {selectedProduct.datumBestand}</div>
-          <div>Peildatum: {selectedProduct.peildatum}</div>
-        </div>
-      ) : null}
     </>
   );
 }
