@@ -15,7 +15,7 @@ export default $config({
     };
   },
   async run() {
-    const zeroVersion = execSync("npm show @rocicorp/zero version")
+    const zeroVersion = execSync("bun pm view @rocicorp/zero version")
       .toString()
       .trim();
 
@@ -161,7 +161,7 @@ export default $config({
     new command.local.Command(
       "zero-deploy-permissions",
       {
-        create: `npx zero-deploy-permissions -p ../../src/schema.ts`,
+        create: `bunx zero-deploy-permissions -p ../../src/schema.ts`,
         // Run the Command on every deploy ...
         triggers: [Date.now()],
         environment: {

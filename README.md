@@ -5,25 +5,25 @@
 First, install dependencies:
 
 ```sh
-npm i
+bun install
 ```
 
 Next, run docker:
 
 ```sh
-npm run dev:db-up
+bun run dev:db-up
 ```
 
 **In a second terminal**, run the zero cache server:
 
 ```sh
-npm run dev:zero-cache
+bun run dev:zero-cache
 ```
 
 **In a third terminal**, run the Vite dev server:
 
 ```sh
-npm run dev:ui
+bun run dev:ui
 ```
 
 ## Option 2: Install Zero in your own project
@@ -61,7 +61,7 @@ VITE_PUBLIC_SERVER=http://localhost:4848
 1. **Install Zero**
 
 ```bash
-npm install @rocicorp/zero
+bun add @rocicorp/zero
 ```
 
 2. **Create Schema** Define your database schema using Zero's schema builder.
@@ -142,8 +142,9 @@ For more examples of queries, mutations, and relationships, explore the
 
 ### Optional: Authentication
 
-This example includes JWT-based authentication. See [api/index.ts](api/index.ts)
-for an example implementation using Hono.
+Authentication is now handled by the Django backend. Configure the frontend
+to point at your backend by setting `VITE_API_BASE_URL` (e.g.
+`http://localhost:8000`).
 
 ### Development
 
@@ -153,17 +154,17 @@ If you are using Docker (referencing the example in
 [docker](docker/docker-compose.yml)), run:
 
 ```bash
-npm run dev:db-up
+bun run dev:db-up
 ```
 
 **2. Start the zero cache server (in a separate terminal):**
 
 ```bash
-npx zero-cache
+bunx zero-cache
 ```
 
 **3. Start your React dev server**
 
 ```bash
-npm run dev # this depends on your react app setup
+bun run dev # this depends on your react app setup
 ```
