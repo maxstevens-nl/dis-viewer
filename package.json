@@ -15,34 +15,48 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@radix-ui/react-separator": "^1.1.8",
+    "@radix-ui/react-slider": "^1.3.6",
+    "@radix-ui/react-slot": "^1.2.4",
     "@rocicorp/zero": "^0.25.2",
+    "@tanstack/react-table": "^8.21.3",
+    "@tanstack/react-virtual": "^3.13.18",
     "@types/papaparse": "^5.5.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.1",
+    "lucide-react": "^0.564.0",
     "papaparse": "^5.4.1",
-    "pg-copy-streams": "^7.0.0",
     "pg": "^8.16.3",
+    "pg-copy-streams": "^7.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sst": "3.9.33",
+    "react-router-dom": "^7.13.0",
+    "recharts": "^3.7.0",
+    "tailwind-merge": "^3.4.1",
+    "tailwindcss-animate": "^1.0.7",
     "zod": "^4.1.13"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@hono/node-server": "^1.13.2",
-    "@types/pg-copy-streams": "^1.2.2",
     "@types/bun": "^1.1.20",
     "@types/node": "^22.7.9",
+    "@types/pg-copy-streams": "^1.2.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.24",
     "dotenv": "^16.4.5",
-    "drizzle-zero": "^0.17.3",
     "drizzle-kit": "^0.31.9",
+    "drizzle-zero": "^0.17.3",
     "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
     "hono": "^4.6.6",
+    "postcss": "^8.5.6",
+    "tailwindcss": "3.4.17",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.0.1",
     "vercel": "^41.3.2",
@@ -55,9 +69,5 @@
     "onlyBuiltDependencies": [
       "@rocicorp/zero-sqlite3"
     ]
-  },
-  "_": "For some reason, sst requires esbuild 0.25.0 when deploying the permission deployer",
-  "overrides": {
-    "esbuild": "0.25.0"
   }
 }
