@@ -15,7 +15,8 @@ const HOLD_INTERVAL_MS = 1000 / 60;
  * A `<button>` that repeats an action when held down
  */
 export function RepeatButton({ onTrigger, ...props }: RepeatButtonProps) {
-  const [event, setEvent] = React.useState<DownEvent | null>(null);
+  const [holding, setHolding] = React.useState(false);
+  const lastEventRef = React.useRef<DownEvent | null>(null);
 
   const onTriggerRef = React.useRef(onTrigger);
   React.useEffect(() => {
@@ -23,9 +24,11 @@ export function RepeatButton({ onTrigger, ...props }: RepeatButtonProps) {
   }, [onTrigger]);
 
   React.useEffect(() => {
-    if (!event) {
+    if (!holding || !lastEventRef.current) {
       return;
     }
+
+    const event = lastEventRef.current;
 
     let timer = setTimeout(() => {
       const onTick = () => {
@@ -39,12 +42,18 @@ export function RepeatButton({ onTrigger, ...props }: RepeatButtonProps) {
     return () => {
       clearTimeout(timer);
     };
-  }, [event]);
+  }, [holding]);
 
   function start(e: DownEvent) {
     if (onTriggerRef.current(e) !== false) {
-      setEvent(e);
+      lastEventRef.current = e;
+      setHolding(true);
     }
+  }
+
+  function stop() {
+    lastEventRef.current = null;
+    setHolding(false);
   }
 
   return (
@@ -55,11 +64,11 @@ export function RepeatButton({ onTrigger, ...props }: RepeatButtonProps) {
         props.onMouseDown?.(e);
       }}
       onMouseUp={(e) => {
-        setEvent(null);
+        stop();
         props.onMouseUp?.(e);
       }}
       onMouseLeave={(e) => {
-        setEvent(null);
+        stop();
         props.onMouseLeave?.(e);
       }}
       onTouchStart={(e) => {
@@ -67,7 +76,7 @@ export function RepeatButton({ onTrigger, ...props }: RepeatButtonProps) {
         props.onTouchStart?.(e);
       }}
       onTouchEnd={(e) => {
-        setEvent(null);
+        stop();
         props.onTouchEnd?.(e);
       }}
     />

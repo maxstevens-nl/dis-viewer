@@ -115,7 +115,7 @@ function ProductDetail() {
   const hasMetrics = sellingPriceHistory.length > 0 || patientHistory.length > 0;
   const hasSpecialisms = factDbcData && factDbcData.length > 0;
 
-  if (productResult?.type !== "complete") {
+  if (!product && productResult?.type !== "complete") {
     return null;
   }
 

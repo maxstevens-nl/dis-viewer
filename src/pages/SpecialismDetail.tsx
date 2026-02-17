@@ -14,9 +14,13 @@ function SpecialismDetail() {
   const { id } = useParams<{ id: string }>();
   const specialismeCd = id ?? "";
 
-  const [specialisme] = useQuery(
+  const [specialisme, specialismeResult] = useQuery(
     specialismeCd ? queries.refSpecialisme.byCode(specialismeCd) : null
   );
+
+  if (!specialisme && specialismeResult?.type !== "complete") {
+    return null;
+  }
 
   if (!specialisme) {
     return (

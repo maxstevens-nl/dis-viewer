@@ -112,6 +112,7 @@ function App() {
     getCoreRowModel: getCoreRowModel(),
   });
 
+  const headerGroups = table.getHeaderGroups();
   const { rows } = table.getRowModel();
 
   const rowVirtualizer = useWindowVirtualizer({
@@ -156,27 +157,24 @@ function App() {
           <em>Geen zorgproducten gevonden</em>
         </div>
       ) : (
-        <div className="border rounded-lg bg-card">
-          <table className="w-full border-collapse table-fixed">
-            <thead className="bg-muted">
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header, index) => (
-                    <th
-                      key={header.id}
-                      className={`p-3 text-left border-b font-medium text-muted-foreground ${index === 0 ? "w-[120px]" : "w-full"}`}
-                    >
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                    </th>
-                  ))}
-                </tr>
+        <div className="border rounded-lg bg-card" role="grid" aria-label="Zorgproducten">
+          {headerGroups.map((headerGroup) => (
+            <div key={headerGroup.id} role="row" className="flex bg-muted">
+              {headerGroup.headers.map((header, index) => (
+                <div
+                  key={header.id}
+                  role="columnheader"
+                  className={`p-3 text-left border-b font-medium text-muted-foreground ${index === 0 ? "w-[120px] flex-shrink-0" : "flex-1"}`}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                </div>
               ))}
-            </thead>
-          </table>
-          <div ref={tableContainerRef}>
+            </div>
+          ))}
+          <div ref={tableContainerRef} role="rowgroup">
             <div
               style={{
                 height: `${rowVirtualizer.getTotalSize()}px`,
@@ -192,6 +190,8 @@ function App() {
                   <Link
                     key={row.id}
                     to={`/${product.zorgproductCd}`}
+                    role="row"
+                    aria-selected={isSelected}
                     data-index={virtualRow.index}
                     ref={rowVirtualizer.measureElement}
                     onClick={() => setSelectedCode(product.zorgproductCd)}
@@ -204,6 +204,7 @@ function App() {
                     {row.getVisibleCells().map((cell, cellIndex) => (
                       <div
                         key={cell.id}
+                        role="gridcell"
                         className={`p-3 text-left truncate whitespace-nowrap overflow-hidden ${cellIndex === 0 ? "w-[120px] flex-shrink-0" : "flex-1"} ${virtualRow.index === rows.length - 1 ? "" : "border-b"}`}
                       >
                         {flexRender(
